@@ -1,0 +1,237 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href={% static 'output.css' %} type="text/css" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css2?family=Poppins&display=swap' rel="stylesheet">
+    <script src="https://kit.fontawesome.com/5c85fd2f27.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    {% comment %} <script type="module" src={% static "acquisitions.js" %}></script> {% endcomment %}
+    <title>SpendWise Dashboard</title>
+</head>
+
+<body class="font-Poppins">
+    <header class="sticky top-0 z-50 flex items-center justify-between px-6 py-4 bg-gradient-to-r from-indigo-700 to-indigo-600 text-white shadow-md">
+        
+        <div class="flex items-center space-x-3">
+            {% if user.profile.avatar %}
+            <img src="{{ user.profile.avatar.url }}" alt="Profile Picture" class="w-10 h-10 rounded-full border-2 border-white">
+            {% else %}
+            <i class="fa-solid fa-circle-user text-2xl text-indigo-200"></i>
+            {% endif %}
+            
+            <div>
+                <p class="text-xs text-indigo-100">Welcome back,</p>
+                {% if user.first_name %}
+                <h1 class="text-lg font-semibold">{{full_name}}</h1>
+                {% else %}
+                <h1 class="text-lg font-semibold">{{username}}</h1>
+                {% endif %}
+            </div>
+        </div>
+    
+        <div class="logo mx-4">
+            <h1 class="text-2xl font-bold tracking-tight">
+                <span class="text-white">Spend</span>
+                <span class="text-emerald-300">Wise</span>
+            </h1>
+        </div>
+    
+        <div class="flex items-center space-x-4">
+            <button id="add-transaction-btn" class="flex items-center space-x-2 bg-white/10 hover:bg-white/20 px-4 py-2 rounded-full transition-all duration-200 group">
+                <i class="fa-solid fa-plus text-emerald-300 group-hover:scale-110 transition-transform"></i>
+                <span class="text-sm hidden md:inline-block">Add Transaction</span>
+            </button>
+    
+            <button class="relative p-2 text-indigo-100 hover:text-white">
+                <i class="fa-solid fa-bell fa-lg"></i>
+                <span class="absolute top-0 right-0 h-2 w-2 rounded-full bg-red-400"></span>
+            </button>
+            
+            <button class="p-2 text-indigo-100 hover:text-white">
+                <a href="{% url 'settings' %}">
+                    <i class="fa-solid fa-gear fa-lg"></i>    
+                </a>
+            </button>
+        </div>
+    </header>
+
+    
+
+    <section class="px-4 md:px-16 my-6">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="group p-6 bg-gradient-to-br from-indigo-600 to-indigo-700 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="p-2 bg-indigo-500/30 rounded-lg">
+                            <i class="fa-solid fa-wallet text-xl text-indigo-200"></i>
+                        </div>
+                        <h2 class="text-lg font-medium text-indigo-100">Available Balance</h2>
+                    </div>
+                    <span class="text-xs bg-white/10 text-white px-2 py-1 rounded-full">Current</span>
+                </div>
+                
+                <p class="text-4xl md:text-5xl font-bold text-white mb-2">$24,500</p>
+                
+                <div class="flex items-center justify-between">
+                    <p class="text-emerald-300 font-medium flex items-center">
+                        <i class="fa-solid fa-arrow-up mr-1 text-sm"></i>
+                        <span class="text-sm">+$2,400 (12%)</span>
+                    </p>
+                    <button class="text-xs text-indigo-100 hover:text-white underline">View Details</button>
+                </div>
+            </div>
+
+            <div class="group p-6 bg-gradient-to-br from-emerald-600 to-emerald-700 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="p-2 bg-emerald-500/30 rounded-lg">
+                            <i class="fa-solid fa-money-bill-trend-up text-xl text-emerald-200"></i>
+                        </div>
+                        <h2 class="text-lg font-medium text-emerald-100">Monthly Income</h2>
+                    </div>
+                    <span class="text-xs bg-white/10 text-white px-2 py-1 rounded-full">May</span>
+                </div>
+                
+                <p class="text-4xl md:text-5xl font-bold text-white mb-2">$8,200</p>
+                
+                <div class="flex items-center justify-between">
+                    <p class="text-emerald-100 font-medium flex items-center">
+                        <i class="fa-solid fa-arrow-up mr-1 text-sm"></i>
+                        <span class="text-sm">+$1,050 (15%)</span>
+                    </p>
+                    <button class="text-xs text-emerald-100 hover:text-white underline">View Report</button>
+                </div>
+            </div>
+    
+            <div class="group p-6 bg-gradient-to-br from-rose-600 to-rose-700 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="p-2 bg-rose-500/30 rounded-lg">
+                            <i class="fa-solid fa-credit-card text-xl text-rose-200"></i>
+                        </div>
+                        <h2 class="text-lg font-medium text-rose-100">Monthly Expenses</h2>
+                    </div>
+                    <span class="text-xs bg-white/10 text-white px-2 py-1 rounded-full">May</span>
+                </div>
+                
+                <p class="text-4xl md:text-5xl font-bold text-white mb-2">$3,700</p>
+                
+                <div class="flex items-center justify-between">
+                    <p class="text-rose-200 font-medium flex items-center">
+                        <i class="fa-solid fa-arrow-down mr-1 text-sm"></i>
+                        <span class="text-sm">+$320 (9%)</span>
+                    </p>
+                    <button class="text-xs text-rose-100 hover:text-white underline">Breakdown</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="px-4 md:px-16 my-8 grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div class="bg-white rounded-xl shadow-md p-6">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-xl font-bold text-gray-800">Recent Transactions</h2>
+            </div>
+            
+            <div class="space-y-4">
+                
+                <div class="flex items-center justify-between p-3 hover:bg-gray-50 rounded-lg transition-colors">
+                    <div class="flex items-center space-x-4">
+                        <div class="p-3 bg-red-100 rounded-full">
+                            <i class="fa-solid fa-utensils text-red-500"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-medium">Dinner at Restaurant</h3>
+                            <p class="text-sm text-gray-500">May 15 • Food & Dining</p>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <p class="font-semibold text-red-500">-$45.20</p>
+                        <p class="text-xs text-gray-400">12:30 PM</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-center justify-between p-3 hover:bg-gray-50 rounded-lg transition-colors">
+                    <div class="flex items-center space-x-4">
+                        <div class="p-3 bg-green-100 rounded-full">
+                            <i class="fa-solid fa-money-bill-wave text-green-500"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-medium">Paycheck</h3>
+                            <p class="text-sm text-gray-500">May 14 • Income</p>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <p class="font-semibold text-green-500">+$2,400.00</p>
+                        <p class="text-xs text-gray-400">9:00 AM</p>
+                    </div>
+                </div>
+
+            </div>
+            
+            <button class="w-full mt-6 py-2 text-indigo-600 border border-indigo-200 rounded-lg hover:bg-indigo-50 transition-colors">
+                View All Transactions
+            </button>
+        </div>
+    
+        <div class="bg-white rounded-xl shadow-md p-6">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-xl font-bold text-gray-800">Budget Overview</h2>
+                <button class="text-sm text-indigo-600 hover:text-indigo-800 flex items-center">
+                    <i class="fa-solid fa-pen-to-square mr-1"></i> Edit Budgets
+                </button>
+            </div>
+            
+            <div class="space-y-5">
+                
+                <div>
+                    <div class="flex justify-between mb-1">
+                        <span class="font-medium">Groceries</span>
+                        <span class="text-sm text-gray-500">$320/$500</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-2">
+                        <div class="bg-emerald-500 h-2 rounded-full" style="width: 64%"></div>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-1">$180 remaining</p>
+                </div>
+                
+                <div>
+                    <div class="flex justify-between mb-1">
+                        <span class="font-medium">Entertainment</span>
+                        <span class="text-sm text-gray-500">$210/$300</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-2">
+                        <div class="bg-amber-500 h-2 rounded-full" style="width: 70%"></div>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-1">$90 remaining</p>
+                </div>
+                
+                <div>
+                    <div class="flex justify-between mb-1">
+                        <span class="font-medium">Transportation</span>
+                        <span class="text-sm text-red-500">$190/$150</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-2">
+                        <div class="bg-red-500 h-2 rounded-full" style="width: 100%"></div>
+                    </div>
+                    <p class="text-xs text-red-500 mt-1">$40 over budget</p>
+                </div>
+            </div>
+            
+            <button class="w-full mt-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors">
+                + Add New Budget
+            </button>
+        </div>
+    </section>
+
+
+    <!-- Doughnut Chart -->
+    <!-- <div style="width: 800px;"><canvas id="acquisitions"></canvas></div> -->
+    
+</body>
+
+</html>
