@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from .models import *
 
 # Create your views here.
 
@@ -15,3 +16,11 @@ def dashboard(request):
     }
     
     return render(request, 'transactions/dashboard.html', context)
+
+def create_transaction(request):
+    # if request.method == 'POST':
+    #     amount = request.POST['id_amount']
+    #     category = request.POST['id_category']
+    #     pass 
+    
+    return render(request, 'transactions/create.html')

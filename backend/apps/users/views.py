@@ -43,6 +43,10 @@ def login(request):
             return render(request, 'users/login.html', {'error': 'Incorrect username or password'})
     return render(request, 'users/login.html')
 
+def logout(request):
+    auth.logout(request)
+    return redirect('login')
+
 def settings(request):
     user = request.user
     user_profile, created = Profile.objects.get_or_create(user=user)
