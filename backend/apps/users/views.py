@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import auth, messages
 from django.contrib.auth.models import User
@@ -55,6 +54,7 @@ def settings(request):
         user.first_name = request.POST['first_name']
         user.last_name = request.POST['last_name']
         user_profile.avatar = request.FILES.get('avatar')
+        user_profile.starting_balance = request.POST['starting_balance']
         
         user.save()
         user_profile.save()

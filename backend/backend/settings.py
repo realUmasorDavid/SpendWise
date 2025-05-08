@@ -83,12 +83,36 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+# USER = os.getenv("user")
+# PASSWORD = os.getenv("password")
+# HOST = os.getenv("host")
+# PORT = os.getenv("port")
+# DBNAME = os.getenv("dbname")
+
+USER = 'postgres.mefvwqxphfuholcaiaxx'
+PASSWORD = 'z+X?,kSy6dQ-G)4'
+HOST = 'aws-0-us-east-2.pooler.supabase.com'
+PORT = '5432'
+DBNAME = 'postgres'
+
+
 DATABASES = {
     'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': DBNAME,
+        'USER': USER,
+        'PASSWORD': PASSWORD,
+        'HOST': HOST,
+        'PORT': PORT,
+        # 'OPTIONS': {'sslmode': 'require'},
+    },
+    'local': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    },
 }
+
+
 
 
 # Password validation
@@ -150,3 +174,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+USE_THOUSAND_SEPARATOR = True
+THOUSAND_SEPARATOR = ','
+
+LOGIN_URL = '/login'
+
+LOGIN_REDIRECT_URL = '/dashboard'

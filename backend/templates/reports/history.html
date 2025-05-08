@@ -1,0 +1,72 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href={% static 'output.css' %} type="text/css" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css2?family=Poppins&display=swap' rel="stylesheet">
+    <script src="https://kit.fontawesome.com/5c85fd2f27.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Create a Category</title>
+    <style>
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body class="font-Poppins">
+
+    <!-- Navigation bar -->
+    <nav class="bg-indigo-700 text-white p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-xl font-bold hover:text-emerald-300 duration-300">SpendWise</h1>
+            <div class="flex items-center space-x-4">
+                <a href="{% url 'dashboard' %}" class="hover:text-indigo-200">Dashboard</a>
+                <a href="/history/" class="hover:text-indigo-200">Transactions</a>
+                <a href="/create/">
+                    <button id="add-transaction-btn" class="flex items-center space-x-2 bg-white/10 hover:bg-white/20 px-4 py-2 rounded-full transition-all duration-200 group">
+                        <i class="fa-solid fa-plus text-emerald-300 group-hover:scale-110 transition-transform"></i>
+                        <span class="text-sm hidden md:inline-block">Add Transaction</span>
+                    </button>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="p-4">
+        <div class="head">
+            <h1 class="text-2xl">Your Past Transactions</h1>
+        </div>
+        {% for transaction in transaction %}
+                <div class="flex items-center justify-between p-3 hover:bg-gray-50 rounded-lg transition-colors">
+                    <div class="flex items-center space-x-4">
+                        <div class="px-3 py-2 rounded-full {% if transaction.category.type == 'IN' %}bg-green-100{% else %}bg-red-100{% endif %}">
+                            <i class="fa-solid {% if transaction.category.type == 'IN' %}fa-money-bill-wave text-green-500{% else %}fa-money-bill-wave text-red-500{% endif %}"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-medium">{{ transaction.name }}</h3>
+                            <p class="text-sm text-gray-500">{{ transaction.category.get_type_display }} • {{ transaction.category.name }}</p>
+                        </div>
+                    </div>
+            
+                    <div class="text-right">
+                        <p class="font-semibold {% if transaction.category.type == 'IN' %}text-green-600{% else %}text-red-600{% endif %}">{% if transaction.category.type == 'IN' %}+{% else %}-{% endif %}<span>&#x20A6;</span>{{ transaction.amount|floatformat:2 }}</p>
+                        <p class="text-sm">
+                            {{ transaction.created_at }}
+                        </p>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="text-center py-6 text-gray-500">
+                    No transactions found
+                </div>
+                {% endfor %}
+    </section>
+</body>
+
+</html>

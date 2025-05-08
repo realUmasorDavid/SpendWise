@@ -8,6 +8,7 @@ from django.dispatch import receiver
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
     currency = models.CharField(max_length=3, default='NGN')
+    starting_balance = models.FloatField(max_length=6, blank=True, null=True)
     avatar = models.ImageField(upload_to='avatars/', null=True)
     phone = models.CharField(max_length=20, blank=True)
     email_verified = models.BooleanField(default=False)

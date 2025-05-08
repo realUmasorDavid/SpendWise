@@ -9,12 +9,116 @@
     <link href='https://fonts.googleapis.com/css2?family=Poppins&display=swap' rel="stylesheet">
     <script src="https://kit.fontawesome.com/5c85fd2f27.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    {% comment %} <script type="module" src={% static "acquisitions.js" %}></script> {% endcomment %}
-    <title>SpendWise Dashboard</title>
+    <title>Create a Transaction</title>
+    <style>
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+    </style>
 </head>
 
 <body class="font-Poppins">
-    
+
+    <!-- Navigation bar -->
+    <nav class="bg-indigo-700 text-white p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-xl font-bold">SpendWise</h1>
+            <div class="flex items-center space-x-4">
+                <a href="{% url 'dashboard' %}" class="hover:text-indigo-200">Dashboard</a>
+                <a href="#" class="hover:text-indigo-200">Transactions</a>
+                <a href="{% url 'create_category' %}">
+                    <button id="add-category-btn" class="flex items-center space-x-2 bg-white/10 hover:bg-white/20 px-4 py-2 rounded-full transition-all duration-200 group">
+                        <i class="fa-solid fa-plus text-emerald-300 group-hover:scale-110 transition-transform"></i>
+                        <span class="text-sm hidden md:inline-block">Add Category</span>
+                    </button>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="min-h-screen flex items-center justify-center bg-gray-50">
+        <div class="max-w-md w-full space-y-8 p-10 bg-white rounded-xl shadow-lg">
+            <div class="text-center">
+                <h1 class="text-3xl  font-bold text-indigo-600">Add a Transaction</h1>
+            </div>
+
+            <form class="mt-8 space-y-6" method="POST" action="{% url 'create_transaction' %}">
+                {% csrf_token %}
+
+                {% if error %}
+                <div class="bg-red-50 border-l-4 border-red-500 p-4 mb-4">
+                    <p class="text-red-700">{{ error }}</p>
+                </div>
+                {% endif %}
+
+                <div class="rounded-md space-y-4">
+                    <div>
+                        <label for="name" class="sr-only">Name</label>
+                        <input id="name" name="name" type="text" required
+                            class="appearance-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                            placeholder="Name">
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="category"
+                            class="sr-only block text-sm font-medium text-gray-700 mb-1">Category</label>
+                        <div class="relative">
+                            <select name="category" id="category"
+                                class="appearance-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm">
+                                <option value="" class="text-gray-500">-- Select Category --</option>
+
+                                {% for category in categories %}
+                                <option value="{{ category.id }}" {% if
+                                    form.category.value|stringformat:"s"==category.id|stringformat:"s" %}selected{%
+                                    endif %}>
+                                    {{ category.name }} ({{ category.get_type_display }})
+                                </option>
+                                {% empty %}
+                                <option disabled>No categories found</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="date" class="sr-only">Date</label>
+                        <input id="date" name="date" type="date" required
+                            class="appearance-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm">
+                    </div>
+
+                    <div>
+                        <label for="amount" class="sr-only">Amount</label>
+                        <input id="amount" name="amount" type="number" min="100" required
+                            class="appearance-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                            placeholder="Amount">
+                    </div>
+
+                    <div>
+                        <label for="description" class="sr-only">Description</label>
+                        <textarea id="description" name="description"
+                            class="resize-none w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                            rows="5" placeholder="Enter your description..."></textarea>
+                    </div>
+
+                    <div class="">
+                        <a href="{% url 'dashboard' %}">
+                            <p class="" style="text-decoration: underline; color: #155dfc;">Return to Dashboard →</p>
+                        </a>
+                    </div>
+
+                </div>
+
+                <div>
+                    <button type="submit" class="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors">Add
+                        Transaction
+                    </button>
+                </div>
+            </form>
+
+        </div>
+    </div>
 </body>
 
 </html>
