@@ -59,7 +59,7 @@
                             <select name="type" class="form-control appearance-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm">>
                                 <option value="">-- Select Type --</option>
                                 <option value="IN" {% if form.type.value == "IN" %}selected{% endif %}>Income</option>
-                                <option value="OUT" {% if form.type.value == "OUT" %}selected{% endif %}>Expense</option>
+                                <option value="EX" {% if form.type.value == "EX" %}selected{% endif %}>Expense</option>
                             </select>
                         </div>
                     </div>
