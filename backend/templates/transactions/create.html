@@ -25,13 +25,13 @@
     <nav class="bg-indigo-700 text-white p-4">
         <div class="container mx-auto flex justify-between items-center">
             <h1 class="text-xl font-bold">SpendWise</h1>
-            <div class="flex items-center space-x-4">
+            <div class="flex items-center space-x-4 text-xs">
                 <a href="{% url 'dashboard' %}" class="hover:text-indigo-200">Dashboard</a>
                 <a href="#" class="hover:text-indigo-200">Transactions</a>
-                <a href="{% url 'create_category' %}">
-                    <button id="add-category-btn" class="flex items-center space-x-2 bg-white/10 hover:bg-white/20 px-4 py-2 rounded-full transition-all duration-200 group">
-                        <i class="fa-solid fa-plus text-emerald-300 group-hover:scale-110 transition-transform"></i>
-                        <span class="text-sm hidden md:inline-block">Add Category</span>
+                <a href="/create/">
+                    <button id="add-transaction-btn" class="flex items-center space-x-2 bg-white/10 hover:bg-white/20 px-3 justify-center text-center lg:px-4 py-2 rounded-full transition-all duration-200 group">
+                        <i class="fa-solid fa-plus m-0 text-emerald-300 group-hover:scale-110 transition-transform"></i>
+                        <span class="text-sm hidden md:inline-block">Add Transaction</span>
                     </button>
                 </a>
             </div>
