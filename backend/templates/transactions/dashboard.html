@@ -177,7 +177,7 @@
                 {% for transaction in transactions|slice:":3" %}
                 <div class="flex items-center justify-between lg:p-3 hover:bg-gray-50 rounded-lg transition-colors">
                     <div class="flex items-center space-x-4">
-                        <div class="lg:p-3 lg:w-full rounded-full {% if transaction.category.type == 'IN' %}bg-green-100{% else %}bg-red-100{% endif %}">
+                        <div class="lg:p-3 rounded-full {% if transaction.category.type == 'IN' %}bg-green-100{% else %}bg-red-100{% endif %}">
                             <i class="fa-solid {% if transaction.category.type == 'IN' %}fa-money-bill-wave text-green-500{% else %}fa-money-bill-wave text-red-500{% endif %}"></i>
                         </div>
                         <div>
