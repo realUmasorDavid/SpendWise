@@ -105,16 +105,16 @@ DBNAME = config("dbname")
 
 
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     'NAME': DBNAME,
+    #     'USER': USER,
+    #     'PASSWORD': PASSWORD,
+    #     'HOST': HOST,
+    #     'PORT': PORT,
+    #     # 'OPTIONS': {'sslmode': 'require'},
+    # },
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': DBNAME,
-        'USER': USER,
-        'PASSWORD': PASSWORD,
-        'HOST': HOST,
-        'PORT': PORT,
-        # 'OPTIONS': {'sslmode': 'require'},
-    },
-    'local': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     },

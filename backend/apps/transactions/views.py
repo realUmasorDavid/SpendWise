@@ -162,3 +162,6 @@ def create_category(request):
         else:
             messages.error(request, 'Please fill in all fields.')
     return render(request, 'transactions/category.html', context)
+
+def home(request):
+    return render(request, 'home.html')
