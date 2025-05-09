@@ -11,17 +11,24 @@ def signup(request):
         username = request.POST['username']
         email = request.POST['email']
         password1 = request.POST['password1']
-        phone_number = request.POST['phone']
+        # first_name = request.POST['first_name']
+        # last_name = request.POST['last_name']
 
         if User.objects.filter(username=username).exists() or User.objects.filter(email=email).exists():
             return render(request, 'users/register.html', {'error': 'Username or email is already in use'})
 
         if password1:
-            user = User.objects.create_user(username, email, password1)
+            user = User.objects.create_user(
+                username, 
+                email, 
+                password1,
+                first_name = request.POST['first_name'], 
+                last_name = request.POST['last_name']
+            )
             user.save()
 
             user_profile, created = Profile.objects.get_or_create(user=user)
-            user_profile.phone_number = phone_number
+            # user_profile.phone_number = phone_number
             user_profile.save()
 
             return redirect('dashboard')
@@ -53,6 +60,7 @@ def settings(request):
     if request.method == 'POST':
         user.first_name = request.POST['first_name']
         user.last_name = request.POST['last_name']
+        user_profile.phone = request.POST['phone_number']
         user_profile.avatar = request.FILES.get('avatar')
         user_profile.starting_balance = request.POST['starting_balance']
         

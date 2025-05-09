@@ -13,9 +13,9 @@
 </head>
 
 <body class="font-Poppins">
-    <header class="sticky top-0 z-50 flex items-center justify-between px-6 py-4 bg-gradient-to-r from-indigo-700 to-indigo-600 text-white shadow-md">
+    <header class="sticky top-0 z-50 flex items-center justify-between p-4 lg:px-6 lg:py-4 bg-gradient-to-r from-indigo-700 to-indigo-600 text-white shadow-md">
         
-        <div class="hidden lg:flex items-center space-x-3">
+        <div class="flex items-center space-x-3">
             {% if user.profile.avatar %}
             <img src="{{ user.profile.avatar.url }}" alt="Profile Picture" class="w-10 h-10 rounded-full border-2 border-white">
             {% else %}
@@ -32,7 +32,7 @@
             </div>
         </div>
     
-        <div class="logo lg:mx-4">
+        <div class="hidden lg:block logo lg:mx-4">
             <h1 class="text-2xl font-bold tracking-tight">
                 <span class="text-white">Spend</span><span class="text-emerald-300">Wise</span>
             </h1>
