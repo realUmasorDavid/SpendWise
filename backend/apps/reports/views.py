@@ -9,6 +9,7 @@ def transaction_history(request):
     
     context = {
         'transaction': transaction,
+        'current_path': request.path,
     }
     
     return render(request, 'reports/history.html', context)

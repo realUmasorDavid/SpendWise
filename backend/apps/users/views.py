@@ -65,5 +65,6 @@ def settings(request):
         'username': request.user.username,
         'user': user, 
         'user_profile': user_profile,
+        'current_path': request.path,
     }
     return render(request, 'users/settings.html', context)

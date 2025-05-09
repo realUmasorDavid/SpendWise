@@ -38,10 +38,10 @@
             </h1>
         </div>
     
-        <div class="flex items-center space-x-4">
+        <div class="hidden lg:flex items-center space-x-2">
             <a href="{% url 'create_transaction' %}">
                 <button id="add-transaction-btn" class="flex items-center space-x-2 bg-white/10 hover:bg-white/20 px-3 lg:px-4 py-2 rounded-full transition-all duration-200 group">
-                    <i class="fa-solid fa-plus m-0 text-emerald-300 group-hover:scale-110 transition-transform"></i>
+                    <i class="fa-solid fa-plus text-emerald-300 group-hover:scale-110 transition-transform"></i>
                     <span class="text-sm hidden md:inline-block">Add Transaction</span>
                 </button>    
             </a>
@@ -58,7 +58,53 @@
                 </a>
             </button>
         </div>
+
+        <button id="hamburger" class="lg:hidden">
+            
+            <svg id="hamburger-icon" class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+            </svg>
+            
+            <svg id="close-icon" class="w-6 h-6 text-white hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+        </button>
     </header>
+
+    <div id="mobile-menu" class="lg:hidden fixed top-0 right-0 h-full w-72 bg-white shadow-lg transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col">
+        <div class="flex-grow flex flex-col justify-center">
+            <ul class="space-y-6 p-4 px-6 text-gray-700">
+                <a href="{% url 'dashboard' %}" 
+                   class="block px-4 py-2 rounded-lg {% if current_path == '/dashboard/' %}bg-indigo-50 text-indigo-600 font-medium{% else %}hover:bg-gray-50 text-gray-700{% endif %}">
+                    <i class="fa-solid fa-home mr-2"></i> Home
+                </a>
+                <a href="{% url 'settings' %}" 
+                   class="block px-4 py-2 rounded-lg {% if current_path == '/settings/' %}bg-indigo-50 text-indigo-600 font-medium{% else %}hover:bg-gray-50 text-gray-700{% endif %}">
+                    <i class="fa-solid fa-user mr-2"></i> Profile
+                </a>
+                <a href="" 
+                   class="block px-4 py-2 rounded-lg {% if current_path == '/notifications/' %}bg-indigo-50 text-indigo-600 font-medium{% else %}hover:bg-gray-50 text-gray-700{% endif %}">
+                    <i class="fa-solid fa-bell mr-2"></i> Notifications
+                </a>
+                <a href="{% url 'create_category' %}" 
+                   class="block px-4 py-2 rounded-lg {% if current_path == '/create/category/' %}bg-indigo-50 text-indigo-600 font-medium{% else %}hover:bg-gray-50 text-gray-700{% endif %}">
+                    <i class="fa-solid fa-plus mr-2"></i> Create Category
+                </a>
+                <a href="{% url 'create_transaction' %}" 
+                   class="block px-4 py-2 rounded-lg {% if current_path == '/create/' %}bg-indigo-50 text-indigo-600 font-medium{% else %}hover:bg-gray-50 text-gray-700{% endif %}">
+                    <i class="fa-solid fa-money-bill-wave mr-2"></i> Create Transaction
+                </a>
+                <a href="{% url 'logout' %}" class="block px-4 py-2 rounded-lg bg-red-100 text-red-700">
+                    <i class="fa-solid fa-right-from-bracket mr-2"></i> Logout
+                </a>
+            </ul>
+        </div>
+        <div class="pb-4">
+            <span class="block text-sm text-black text-center">
+                © 2025 <a href="/" class="hover:underline">Group 8™</a>. All Rights Reserved.
+            </span>
+        </div>
+    </div>
 
     
 
@@ -261,6 +307,22 @@
     <!-- Doughnut Chart -->
     <!-- <div style="width: 800px;"><canvas id="acquisitions"></canvas></div> -->
     
+    <script>
+        document.getElementById('hamburger').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            const hamburgerIcon = document.getElementById('hamburger-icon');
+            const closeIcon = document.getElementById('close-icon');
+            
+            
+            mobileMenu.classList.toggle('translate-x-full');
+            mobileMenu.classList.toggle('translate-x-0');
+            document.body.classList.toggle('overflow-hidden');
+            
+            
+            hamburgerIcon.classList.toggle('hidden');
+            closeIcon.classList.toggle('hidden');
+        });
+    </script>
 </body>
 
 </html>

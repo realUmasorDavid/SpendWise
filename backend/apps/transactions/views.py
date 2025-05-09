@@ -100,6 +100,7 @@ def dashboard(request):
         'percentage_expense_change': percentage_expense_change,
         'percentage_balance_change': percentage_balance_change,
         'current_month': current_month,
+        'current_path': request.path,
     }
     
     return render(request, 'transactions/dashboard.html', context)
@@ -136,6 +137,7 @@ def create_transaction(request):
             
     context = {
         'categories': Category.objects.filter(user=request.user),
+        'current_path': request.path,
     }
     return render(request, 'transactions/create.html', context)
 
@@ -143,6 +145,7 @@ def create_category(request):
     
     context = {
         'categories': Category.objects.filter(user=request.user),
+        'current_path': request.path,
     }
     if request.method == 'POST':
         name = request.POST.get('name')
