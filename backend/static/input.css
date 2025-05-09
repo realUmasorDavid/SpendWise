@@ -4,3 +4,28 @@
     --color-primary: #4F46E5;
     --font-Poppins: "Poppins", sans-serif;
 }
+
+.code{
+    font-size: xx-large;
+    font-weight: 900;
+    color: blue;
+    
+}
+.section{
+    min-height: 15vh;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 35px;
+}
+.spend{
+    margin: 1rem 0;
+}
+.menu{
+    border:  solid 1px blue;
+    border-radius: 8px;
+    padding: 16px 16px;
+    background-color: blue;
+    color: white;
+}
