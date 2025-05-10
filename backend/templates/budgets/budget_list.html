@@ -121,7 +121,7 @@
                         <div class="w-full bg-gray-200 rounded-full h-2">
                             <div class="h-2 rounded-full 
                                 {% if budget.remaining_amount < 0 %}bg-red-600
-                                {% elif budget.progress > 80 %}bg-yellow-500
+                                {% elif budget.progress > 60 %}bg-yellow-500
                                 {% else %}bg-green-500{% endif %}" 
                                 style="width: {% widthratio budget.spent_amount budget.amount 100 %}%">
                             </div>

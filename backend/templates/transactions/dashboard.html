@@ -276,7 +276,12 @@
                         <span class="text-xs lg:text-sm text-gray-500"><span>&#x20A6;</span>{{budgets.spent_amount}}/<span>&#x20A6;</span>{{budgets.amount}}</span>
                     </div>
                     <div class="w-full bg-gray-200 rounded-full h-2">
-                        <div class="bg-emerald-500 h-2 rounded-full" style="width: {{budgets.progress}}%"></div>
+                        <div class="h-2 rounded-full 
+                                {% if budgets.remaining_amount < 0 %}bg-red-600
+                                {% elif budgets.progress > 50 %}bg-yellow-500
+                                {% else %}bg-green-500{% endif %}" 
+                                style="width: {{budgets.progress}}%">
+                            </div>
                     </div>
                     <p class="text-xs text-gray-500 mt-1"><span>&#x20A6;</span>{{ budgets.remaining_amount|floatformat:2 }} remaining</p>
                 </div>
