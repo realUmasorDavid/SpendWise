@@ -1,6 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import *
 from apps.transactions.models import *
+from django.http import JsonResponse
+from django.utils import timezone
+from django.contrib import messages
+from django.core.exceptions import ValidationError
 
 # Create your views here.
 
@@ -39,45 +43,95 @@ def list(request):
     return render(request, 'budgets/budget_list.html', context)
 
 def budget_update(request, pk):
-    budget = get_object_or_404(Budget, pk=pk)
-
+    budget = get_object_or_404(Budget, pk=pk, user=request.user)  # Added user check for security
+    
     if request.method == 'POST':
-        new_name = request.POST.get('name')
-        new_amount = request.POST.get('amount')
-        new_start_date = request.POST.get('start_date')
-        new_end_date = request.POST.get('end_date')
-        new_categories = request.POST.getlist('categories')
-        
-        # Validate form data
-        if not new_name:
-            return render(request, 'budgets/budget_list.html', {"budget": budget, "error": "Name is required."})
+        try:
+            # Get and validate form data
+            new_name = request.POST.get('name', '').strip()
+            new_amount = request.POST.get('amount', '').strip()
+            new_start_date = request.POST.get('start_date', '').strip()
+            new_end_date = request.POST.get('end_date', '').strip()
+            new_categories = request.POST.getlist('categories', [])
+            
+            # Validate required fields
+            if not new_name:
+                raise ValidationError("Name is required.")
+            if not new_amount:
+                raise ValidationError("Amount is required.")
+            if not new_start_date:
+                raise ValidationError("Start date is required.")
+            if not new_end_date:
+                raise ValidationError("End date is required.")
+            if not new_categories:
+                raise ValidationError("At least one category is required.")
 
-        if not new_amount:
-            return render(request, 'budgets/budget_list.html', {"budget": budget, "error": "Amount is required."})
+            # Convert and validate amount
+            try:
+                amount_decimal = Decimal(new_amount)
+                if amount_decimal <= 0:
+                    raise ValidationError("Amount must be positive.")
+            except:
+                raise ValidationError("Invalid amount format.")
 
-        if not new_start_date:
-            return render(request, 'budgets/budget_list.html', {"budget": budget, "error": "Start Date is required."})
-        
-        if not new_end_date:
-            return render(request, 'budgets/budget_list.html', {"budget": budget, "error": "End Date is required."})
-        
-        if not new_categories:
-            return render(request, 'budgets/budget_list.html', {"budget": budget, "error": "Category is required."})
+            # Update budget
+            budget.name = new_name
+            budget.amount = amount_decimal
+            budget.start_date = new_start_date
+            budget.end_date = new_end_date
+            
+            # Clear and set categories
+            budget.categories.clear()
+            for category_id in new_categories:
+                category = get_object_or_404(Category, pk=category_id, user=request.user)
+                budget.categories.add(category)
+            
+            budget.save()
+            messages.success(request, "Budget updated successfully!")
+            return redirect('budget_list')
+
+        except ValidationError as e:
+            messages.error(request, str(e))
+        except Exception as e:
+            messages.error(request, f"An error occurred: {str(e)}")
+
+    # Get all user's expense categories for the form
+    categories = Category.objects.filter(user=request.user, type='EX')
+    
+    return render(request, 'budgets/budget_list.html', {
+        'budget': budget,
+        'categories': categories,
+        'selected_categories': budget.categories.values_list('id', flat=True)
+    })
+    
+def budget_edit(request, pk):
+    budget = get_object_or_404(Budget, pk=pk, user=request.user)
+    categories = Category.objects.filter(user=request.user, type='EX')  # Only expense categories
+    
+    if request.method == 'POST':
+        new_name = request.POST.get('name', '')
+        new_start_date = request.POST.get('start_date', '')
+        new_end_date = request.POST.get('end_date', '')
 
         budget.name = new_name
-        budget.amount = new_amount
         budget.start_date = new_start_date
         budget.end_date = new_end_date
-        budget.categories = new_categories
         budget.save()
 
+        messages.success(request, "Budget updated successfully!")
         return redirect('budget_list')
-    return render(request, 'budgets/budget_list.html', {'budget': budget})
+        
+    context = {
+        'budget': budget,
+        'categories': categories,
+    }
+    
+    return render(request, 'budgets/budget_edit.html', context)
 
 def budget_delete(request, pk):
-    notes = get_object_or_404(Budget, pk=pk)
+    budget = get_object_or_404(Budget, pk=pk)
     if request.method == 'POST':
-        notes.delete()
+        budget.delete()
         return redirect('budget_list')
     return render(request, 'budgets/budget_list.html', {'budget': budget})
 
