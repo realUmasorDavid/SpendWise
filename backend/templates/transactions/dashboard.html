@@ -251,55 +251,45 @@
                     View All Transactions
                 </button>
             </a>
+            
         </div>
     
         <div class="bg-white rounded-xl shadow-md p-6">
             <div class="flex items-center justify-between mb-6">
-                <h2 class="text-xl font-bold text-gray-800">Budget Overview</h2>
-                <button class="text-sm text-indigo-600 hover:text-indigo-800 flex items-center">
-                    <i class="fa-solid fa-pen-to-square mr-1"></i> Edit Budgets
-                </button>
+                <h2 class="text-base lg:text-xl font-bold text-gray-800">Budget Overview</h2>
+                <a href="{% url 'budget_list' %}">
+                    <button class="text-sm text-indigo-600 hover:text-indigo-800 flex items-center">
+                        <i class="fa-solid fa-pen-to-square mr-1"></i> Edit Budgets
+                    </button>
+                </a>
             </div>
             
             <div class="space-y-5">
                 
+                {% for budgets in budgets %}
+                
+                
+
                 <div>
-                    <div class="flex justify-between mb-1">
-                        <span class="font-medium">Groceries</span>
-                        <span class="text-sm text-gray-500">$320/$500</span>
+                    <div class="flex justify-between items-center mb-1">
+                        <span class="font-medium">{{budgets.name}}</span>
+                        <span class="text-xs lg:text-sm text-gray-500"><span>&#x20A6;</span>{{budgets.spent_amount}}/<span>&#x20A6;</span>{{budgets.amount}}</span>
                     </div>
                     <div class="w-full bg-gray-200 rounded-full h-2">
-                        <div class="bg-emerald-500 h-2 rounded-full" style="width: 64%"></div>
+                        <div class="bg-emerald-500 h-2 rounded-full" style="width: {{budgets.progress}}%"></div>
                     </div>
-                    <p class="text-xs text-gray-500 mt-1">$180 remaining</p>
+                    <p class="text-xs text-gray-500 mt-1"><span>&#x20A6;</span>{{ budgets.remaining_amount|floatformat:2 }} remaining</p>
                 </div>
                 
-                <div>
-                    <div class="flex justify-between mb-1">
-                        <span class="font-medium">Entertainment</span>
-                        <span class="text-sm text-gray-500">$210/$300</span>
-                    </div>
-                    <div class="w-full bg-gray-200 rounded-full h-2">
-                        <div class="bg-amber-500 h-2 rounded-full" style="width: 70%"></div>
-                    </div>
-                    <p class="text-xs text-gray-500 mt-1">$90 remaining</p>
-                </div>
+                {% endfor %}
                 
-                <div>
-                    <div class="flex justify-between mb-1">
-                        <span class="font-medium">Transportation</span>
-                        <span class="text-sm text-red-500">$190/$150</span>
-                    </div>
-                    <div class="w-full bg-gray-200 rounded-full h-2">
-                        <div class="bg-red-500 h-2 rounded-full" style="width: 100%"></div>
-                    </div>
-                    <p class="text-xs text-red-500 mt-1">$40 over budget</p>
-                </div>
             </div>
             
-            <button class="w-full mt-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors">
-                + Add New Budget
-            </button>
+            <a href="{% url 'create_budget' %}">
+                <button class="w-full mt-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors">
+                    + Add New Budget Item
+                </button>
+            </a>
         </div>
     </section>
 

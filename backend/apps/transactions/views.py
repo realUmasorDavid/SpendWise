@@ -8,6 +8,7 @@ from datetime import datetime, timedelta
 from django.utils import timezone
 from django.db.models import Sum
 from decimal import Decimal
+from apps.budgets.models import Budget
 # Create your views here.
 
 @login_required
@@ -102,6 +103,18 @@ def dashboard(request):
         'current_month': current_month,
         'current_path': request.path,
     }
+    
+    budgets = Budget.objects.filter(user=request.user)
+    for budget in budgets:
+        if budget.amount > Decimal('0'):
+            progress = (Decimal(str(budget.spent_amount())) / Decimal(str(budget.amount))) * Decimal('100')
+            budget.progress = float(min(Decimal('100'), progress))  # Convert final result to float
+        else:
+            budget.progress = 0.0
+    
+    context.update({
+        'budgets': budgets,
+    })
     
     return render(request, 'transactions/dashboard.html', context)
 
