@@ -24,7 +24,9 @@
     <!-- Navigation bar -->
     <nav class="sticky bg-indigo-700 text-white p-4 z-100">
         <div class="container mx-auto flex justify-between items-center">
-            <h1 class="text-xl font-bold">SpendWise</h1>
+            <a href="/">
+                <h1 class="text-xl font-bold">SpendWise</h1>
+            </a>
             <div class="hidden lg:flex items-center space-x-4 text-xs">
                 <a href="{% url 'dashboard' %}" class="hover:text-indigo-200">Dashboard</a>
                 <a href="#" class="hover:text-indigo-200">Transactions</a>
@@ -53,7 +55,7 @@
                    class="block px-4 py-2 rounded-lg {% if current_path == '/settings/' %}bg-indigo-50 text-indigo-600 font-medium{% else %}hover:bg-gray-50 text-gray-700{% endif %}">
                     <i class="fa-solid fa-user mr-2"></i> Profile
                 </a>
-                <a href="" 
+                <a href="{% url 'create_category' %}" 
                    class="block px-4 py-2 rounded-lg {% if current_path == '/notifications/' %}bg-indigo-50 text-indigo-600 font-medium{% else %}hover:bg-gray-50 text-gray-700{% endif %}">
                     <i class="fa-solid fa-bell mr-2"></i> Notifications
                 </a>
@@ -69,11 +71,6 @@
                     <i class="fa-solid fa-right-from-bracket mr-2"></i> Logout
                 </a>
             </ul>
-        </div>
-        <div class="pb-4">
-            <span class="block text-sm text-black text-center">
-                © 2025 <a href="/" class="hover:underline">Group 8™</a>. All Rights Reserved.
-            </span>
         </div>
     </div>
 
@@ -105,17 +102,20 @@
                             class="sr-only block text-sm font-medium text-gray-700 mb-1">Category</label>
                         <div class="relative">
                             <select name="category" id="category"
-                                class="appearance-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm">
-                                <option value="" class="text-gray-500">-- Select Category --</option>
-
-                                {% for category in categories %}
-                                <option value="{{ category.id }}" {% if
-                                    form.category.value|stringformat:"s"==category.id|stringformat:"s" %}selected{%
+                            class="appearance-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm">
+                            <option value="" class="text-gray-500">-- Select Category --</option>
+                            
+                            
+                            {% for category in categories %}
+                            <option value="{{ category.id }}" {% if
+                                form.category.value|stringformat:"s"==category.id|stringformat:"s" %}selected{%
                                     endif %}>
                                     {{ category.name }} ({{ category.get_type_display }})
                                 </option>
                                 {% empty %}
-                                <option disabled>No categories found</option>
+                                <div class="space-y-2 max-h-60 overflow-y-auto px-3 py-3 border border-gray-200 rounded-md">
+                                    <p class="text-sm text-gray-500">No categories available. Create some first.</p>
+                                </div>
                                 {% endfor %}
                             </select>
                         </div>

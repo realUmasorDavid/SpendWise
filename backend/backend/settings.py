@@ -49,6 +49,8 @@ INSTALLED_APPS = [
     'apps.transactions',
     'apps.reports',
     'apps.users',
+    'apps.notifications',
+    # 'apps.notifications.apps.NotificationsConfig',
 ]
 
 MIDDLEWARE = [
@@ -74,6 +76,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'apps.notifications.context_processor.notification_context',
             ],
         },
     },
@@ -105,19 +108,19 @@ DBNAME = config("dbname")
 
 
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.postgresql',
-    #     'NAME': DBNAME,
-    #     'USER': USER,
-    #     'PASSWORD': PASSWORD,
-    #     'HOST': HOST,
-    #     'PORT': PORT,
-    #     # 'OPTIONS': {'sslmode': 'require'},
-    # },
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': DBNAME,
+        'USER': USER,
+        'PASSWORD': PASSWORD,
+        'HOST': HOST,
+        'PORT': PORT,
+        # 'OPTIONS': {'sslmode': 'require'},
     },
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': BASE_DIR / 'db.sqlite3',
+    # },
 }
 
 
