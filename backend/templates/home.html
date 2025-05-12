@@ -6,6 +6,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href={% static 'output.css' %} type="text/css" rel="stylesheet">
+    {% comment %}
+    <link href={% static 'home.css' %} type="text/css" rel="stylesheet"> {% endcomment %}
     <link href='https://fonts.googleapis.com/css2?family=Poppins&display=swap' rel="stylesheet">
     <script src="https://kit.fontawesome.com/5c85fd2f27.js" crossorigin="anonymous"></script>
     <title>SpendWise</title>
@@ -16,9 +18,11 @@
         class="sticky top-0 z-50 flex items-center justify-between p-4 lg:px-6 lg:py-4 bg-gradient-to-r from-indigo-700 to-indigo-600 text-white shadow-md">
 
         <div class="block logo lg:mx-4">
-            <h1 class="text-2xl font-bold tracking-tight">
-                <span class="text-white">Spend</span><span class="text-emerald-300">Wise</span>
-            </h1>
+            <a href="/">
+                <h1 class="text-2xl font-bold tracking-tight">
+                    <span class="text-white">Spend</span><span class="text-emerald-300">Wise</span>
+                </h1>
+            </a>
         </div>
 
         <div class="hidden lg:flex space-x-4 logo lg:mx-4">
@@ -74,7 +78,7 @@
                     class="block px-4 py-2 rounded-lg {% if current_path == '/settings/' %}bg-indigo-50 text-indigo-600 font-medium{% else %}hover:bg-gray-50 text-gray-700{% endif %}">
                     <i class="fa-solid fa-user mr-2"></i> Profile
                 </a>
-                <a href=""
+                <a href="{% url 'create_category' %}" 
                     class="block px-4 py-2 rounded-lg {% if current_path == '/notifications/' %}bg-indigo-50 text-indigo-600 font-medium{% else %}hover:bg-gray-50 text-gray-700{% endif %}">
                     <i class="fa-solid fa-bell mr-2"></i> Notifications
                 </a>
@@ -98,6 +102,23 @@
         <p class="spend">Spend, save, and give toward what's important in life</p>
         <button class="menu">Manage my expenses</button>
     </section>
+
+    <script>
+        document.getElementById('hamburger').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            const hamburgerIcon = document.getElementById('hamburger-icon');
+            const closeIcon = document.getElementById('close-icon');
+            
+            
+            mobileMenu.classList.toggle('translate-x-full');
+            mobileMenu.classList.toggle('translate-x-0');
+            document.body.classList.toggle('overflow-hidden');
+            
+            
+            hamburgerIcon.classList.toggle('hidden');
+            closeIcon.classList.toggle('hidden');
+        });
+    </script>
 </body>
 
 </html>

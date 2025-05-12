@@ -9,6 +9,7 @@ from django.utils import timezone
 from django.db.models import Sum
 from decimal import Decimal
 from apps.budgets.models import Budget
+from apps.notifications.models import *
 # Create your views here.
 
 @login_required
@@ -102,6 +103,8 @@ def dashboard(request):
         'percentage_balance_change': percentage_balance_change,
         'current_month': current_month,
         'current_path': request.path,
+        'notifications': Notification.objects.filter(user=request.user, is_read=False)[:5],
+        'unread_count': Notification.objects.filter(user=request.user, is_read=False).count(),
     }
     
     budgets = Budget.objects.filter(user=request.user)

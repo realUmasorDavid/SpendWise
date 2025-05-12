@@ -49,6 +49,8 @@ INSTALLED_APPS = [
     'apps.transactions',
     'apps.reports',
     'apps.users',
+    'apps.notifications',
+    # 'apps.notifications.apps.NotificationsConfig',
 ]
 
 MIDDLEWARE = [
@@ -74,6 +76,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'apps.notifications.context_processor.notification_context',
             ],
         },
     },

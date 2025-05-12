@@ -8,7 +8,7 @@
     <link href={% static 'output.css' %} type="text/css" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css2?family=Poppins&display=swap' rel="stylesheet">
     <script src="https://kit.fontawesome.com/5c85fd2f27.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
     <title>SpendWise Dashboard</title>
 </head>
 
@@ -33,9 +33,11 @@
         </div>
     
         <div class="hidden lg:block logo lg:mx-4">
-            <h1 class="text-2xl font-bold tracking-tight">
-                <span class="text-white">Spend</span><span class="text-emerald-300">Wise</span>
-            </h1>
+            <a href="/">
+                <h1 class="text-2xl font-bold tracking-tight">
+                    <span class="text-white">Spend</span><span class="text-emerald-300">Wise</span>
+                </h1>
+            </a>
         </div>
     
         <div class="hidden lg:flex items-center space-x-2">
@@ -45,12 +47,73 @@
                     <span class="text-sm hidden md:inline-block">Add Transaction</span>
                 </button>    
             </a>
-            
-    
-            <button class="relative p-2 text-indigo-100 hover:text-white">
-                <i class="fa-solid fa-bell fa-lg"></i>
-                <span class="absolute top-0 right-0 h-2 w-2 rounded-full bg-red-400"></span>
-            </button>
+
+            <div class="relative" x-data="{ isOpen: false }">
+                <!-- Notification Bell Button -->
+                <button 
+                    @click="isOpen = !isOpen"
+                    @keydown.escape="isOpen = false"
+                    class="hover:text-white relative focus:outline-none"
+                    aria-label="Notifications"
+                    aria-haspopup="true"
+                    :aria-expanded="isOpen"
+                >
+                    <i class="fas fa-bell text-xl p-2.5"></i>
+                    {% if unread_count > 0 %}
+                    <span class="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                        {{ unread_count }}
+                    </span>
+                    {% endif %}
+                </button>
+                
+                <!-- Dropdown Panel -->
+                <div 
+                    x-show="isOpen"
+                    @click.away="isOpen = false"
+                    x-transition:enter="transition ease-out duration-200"
+                    x-transition:enter-start="opacity-0 scale-95"
+                    x-transition:enter-end="opacity-100 scale-100"
+                    x-transition:leave="transition ease-in duration-75"
+                    x-transition:leave-start="opacity-100 scale-100"
+                    x-transition:leave-end="opacity-0 scale-95"
+                    class="absolute right-0 mt-2 w-80 bg-white rounded-md shadow-lg z-50 border border-gray-200 origin-top-right"
+                    style="display: none;"
+                >
+                    <div class="p-3 border-b border-gray-200">
+                        <h3 class="font-medium text-gray-800">Notifications</h3>
+                    </div>
+                    <div class="divide-y divide-gray-100 max-h-96 overflow-y-auto">
+                        {% for notification in notifications %}
+                        <a 
+                            href="{% if notification.related_url %}{{ notification.related_url }}{% else %}/{% endif %}" 
+                            class="block p-3 hover:bg-gray-50 {% if not notification.is_read %}bg-blue-50{% endif %}"
+                            @click="isOpen = false"
+                            onclick="markAsRead({{ notification.id }})"
+                        >
+                            <div class="flex justify-between">
+                                <span class="font-medium text-black">{{ notification.title }}</span>
+                                <span class="text-xs text-gray-500">{{ notification.created_at|timesince }} ago</span>
+                            </div>
+                            <p class="text-sm text-gray-600 mt-1">{{ notification.message }}</p>
+                        </a>
+                        {% empty %}
+                        <div class="p-4 text-center text-gray-500">
+                            No notifications yet
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <div class="p-2 border-t border-gray-200 text-center">
+                        <a 
+                            href="{% url 'notification_list' %}" 
+                            class="text-sm text-indigo-600 hover:underline"
+                            @click="isOpen = false"
+                        >
+                            View All
+                        </a>
+                    </div>
+                </div>
+            </div>
+
             
             <button class="p-2 text-indigo-100 hover:text-white">
                 <a href="{% url 'settings' %}">
@@ -82,7 +145,7 @@
                    class="block px-4 py-2 rounded-lg {% if current_path == '/settings/' %}bg-indigo-50 text-indigo-600 font-medium{% else %}hover:bg-gray-50 text-gray-700{% endif %}">
                     <i class="fa-solid fa-user mr-2"></i> Profile
                 </a>
-                <a href="" 
+                <a href="{% url 'create_category' %}" 
                    class="block px-4 py-2 rounded-lg {% if current_path == '/notifications/' %}bg-indigo-50 text-indigo-600 font-medium{% else %}hover:bg-gray-50 text-gray-700{% endif %}">
                     <i class="fa-solid fa-bell mr-2"></i> Notifications
                 </a>
@@ -98,11 +161,6 @@
                     <i class="fa-solid fa-right-from-bracket mr-2"></i> Logout
                 </a>
             </ul>
-        </div>
-        <div class="pb-4">
-            <span class="block text-sm text-black text-center">
-                © 2025 <a href="/" class="hover:underline">Group 8™</a>. All Rights Reserved.
-            </span>
         </div>
     </div>
 
@@ -259,7 +317,7 @@
                 <h2 class="text-base lg:text-xl font-bold text-gray-800">Budget Overview</h2>
                 <a href="{% url 'budget_list' %}">
                     <button class="text-sm text-indigo-600 hover:text-indigo-800 flex items-center">
-                        <i class="fa-solid fa-pen-to-square mr-1"></i> Edit Budgets
+                        <i class="fa-solid fa-pen-to-square mr-1"></i> Edit  Items
                     </button>
                 </a>
             </div>
@@ -277,13 +335,19 @@
                     </div>
                     <div class="w-full bg-gray-200 rounded-full h-2">
                         <div class="h-2 rounded-full 
-                                {% if budgets.remaining_amount < 0 %}bg-red-600
+                                {% if budgets.remaining_amount <= 0 %}bg-red-600
                                 {% elif budgets.progress > 50 %}bg-yellow-500
                                 {% else %}bg-green-500{% endif %}" 
                                 style="width: {{budgets.progress}}%">
                             </div>
                     </div>
-                    <p class="text-xs text-gray-500 mt-1"><span>&#x20A6;</span>{{ budgets.remaining_amount|floatformat:2 }} remaining</p>
+                    <p class="text-xs text-gray-500 mt-1">
+                        {% if budgets.remaining_amount >= 0 %}
+                        <span>&#x20A6;</span>{{ budgets.remaining_amount|floatformat:2 }} remaining
+                        {% else %}
+                        <span>&#x20A6;</span>{{ budgets.remaining_amount|floatformat:2|cut:"-" }} over budget
+                        {% endif %}
+                    </p>
                 </div>
                 
                 {% endfor %}
@@ -297,10 +361,6 @@
             </a>
         </div>
     </section>
-
-
-    <!-- Doughnut Chart -->
-    <!-- <div style="width: 800px;"><canvas id="acquisitions"></canvas></div> -->
     
     <script>
         document.getElementById('hamburger').addEventListener('click', function() {
@@ -317,6 +377,16 @@
             hamburgerIcon.classList.toggle('hidden');
             closeIcon.classList.toggle('hidden');
         });
+
+        function markAsRead(notificationId) {
+            fetch(`/notifications/${notificationId}/mark-read/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',
+                    'Content-Type': 'application/json',
+        },
+    })
+}
     </script>
 </body>
 

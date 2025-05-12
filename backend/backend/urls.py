@@ -25,6 +25,7 @@ urlpatterns = [
     path('', include('apps.users.urls')),
     path('', include('apps.reports.urls')),
     path('', include('apps.budgets.urls')),
+    path('notifications/', include('apps.notifications.urls')),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
