@@ -1,4 +1,4 @@
-from django.db.models.signals import post_save
+from django.db.models.signals import pre_save, post_save
 from django.dispatch import receiver
 from apps.transactions.models import Transaction
 from apps.budgets.models import Budget
@@ -40,14 +40,18 @@ def user_notifications(sender, instance, created, **kwargs):
             message="Thanks for joining SpendWise. We hope you enjoy your experience.",
             related_url="/dashboard/"
         )
-    elif hasattr(instance, 'profile'):
+    
+        
+@receiver(pre_save, sender=Profile)
+def check_balance_change(sender, instance, **kwargs):
+    if instance.pk: 
         try:
-            old_profile = Profile.objects.get(pk=instance.profile.pk)
-            if old_profile.starting_balance != instance.profile.starting_balance:
+            old = Profile.objects.get(pk=instance.pk)
+            if old.starting_balance != instance.starting_balance:
                 Notification.objects.create(
-                    user=instance,
+                    user=instance.user,
                     title="Balance Updated",
-                    message=f"Your starting balance was set to ₦{instance.profile.starting_balance}",
+                    message=f"Your starting balance was updated to ₦{instance.starting_balance}",
                     related_url="/dashboard/"
                 )
         except Profile.DoesNotExist:

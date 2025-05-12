@@ -103,7 +103,7 @@ def dashboard(request):
         'percentage_balance_change': percentage_balance_change,
         'current_month': current_month,
         'current_path': request.path,
-        'notifications': Notification.objects.filter(user=request.user, is_read=False)[:5],
+        'notifications': Notification.objects.filter(user=request.user)[:5],
         'unread_count': Notification.objects.filter(user=request.user, is_read=False).count(),
     }
     
