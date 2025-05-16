@@ -125,7 +125,7 @@
                                 {% if budget.remaining_amount < 0 %}bg-red-600
                                 {% elif budget.progress > 60 %}bg-yellow-500
                                 {% else %}bg-green-500{% endif %}" 
-                                style="width: {% widthratio budget.spent_amount budget.amount 100 %}%">
+                                style="width: {% widthratio budget.spent_amount budget.amount 100 %}%; max-width: 100%;">
                             </div>
                         </div>
                         <div class="flex justify-between text-xs text-gray-500">

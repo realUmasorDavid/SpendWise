@@ -6,15 +6,16 @@ from django.contrib import messages
 # Create your views here.
 
 def budget(request):
-    category = Category.objects.filter(user=request.user, type='EX')
+    categories = Category.objects.filter(user=request.user, type='EX')
     
     if request.method == 'POST':
         name = request.POST.get('name')
-        amount = request.POST.get('amount')
+        amount = Decimal(request.POST.get('amount'))  # Convert to Decimal
         start_date = request.POST.get('start_date')
         end_date = request.POST.get('end_date')
-        categories = request.POST.getlist('categories')
-
+        category_ids = request.POST.getlist('categories')  # This returns list of IDs
+        
+        # Create the budget
         budget = Budget.objects.create(
             user=request.user,
             name=name,
@@ -23,11 +24,13 @@ def budget(request):
             end_date=end_date
         )
         
-        budget.categories.set(categories)
-        budget.save()
+        # Set categories using the IDs
+        budget.categories.set(category_ids)
+        
+        return redirect('budget_list')  # Redirect after POST
     
     context = {
-        'category': category,
+        'categories': categories,  # Fixed variable name (was 'category')
     }
     return render(request, 'budgets/budget_create.html', context)
 
@@ -68,4 +71,4 @@ def budget_delete(request, pk):
     if request.method == 'POST':
         budget.delete()
         return redirect('budget_list')
-    return render(request, 'budgets/budget_list.html', {'budget': budget})
+    return render(request, 'budgets/budget_delete.html', {'budget': budget})
