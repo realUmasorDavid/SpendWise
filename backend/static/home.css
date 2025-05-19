@@ -12,7 +12,7 @@
     justify-content: center;
     margin-top: 35px;
 }
-.spend{
+.spender{
     margin: 1rem 0;
 }
 .menu{
@@ -29,7 +29,10 @@
     color: blue;
 }
 .spend{
-    padding: 0 6rem;
+    padding: 0 3rem;
+    display: flex;
+    flex-direction: row;
+    margin: 4rem 4rem;
 }
 .wise{
     margin-bottom: 16px;
@@ -37,4 +40,46 @@
 
 img {
     height: 40px;
+    width: 40px;
+}
+.city{
+    display: flex;
+    margin: 2rem 0;
+}
+
+.section_head{
+    font-size: 20px;
+    font-weight: 900;
+}
+.go{
+    margin: 0 2rem;
+}
+.testimony{
+    border: solid 3px blue;
+    padding: 60px 10px;
+    background-color: blue;
+    border-radius: 8px;
+    margin: 0 20rem;
+    color: white;
+    text-align: center;
+}
+.heading{
+    font-size: 30px;
+    font-weight: 400;
+    color: white;
+}
+.text{
+    margin: 0 4rem;
+}
+.free{
+    display: flex;
+    flex-direction: column;
+}
+.picture img{
+    height: 500px;
+    width: 1200px;
+}
+.five{
+    font-size: 28px;
+    font-weight: 500;
 }

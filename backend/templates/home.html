@@ -5,12 +5,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href={% static 'output.css' %} type="text/css" rel="stylesheet">
-    <link href={% static 'home.css' %} type="text/css" rel="stylesheet">
+    <link href='{% static "output.css" %}' type="text/css" rel="stylesheet">
+    <link href='{% static "home.css" %}' type="text/css" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css2?family=Poppins&display=swap' rel="stylesheet">
     <script src="https://kit.fontawesome.com/5c85fd2f27.js" crossorigin="anonymous"></script>
     <title>SpendWise</title>
-    
+
 </head>
 
 <body class="font-Poppins">
@@ -36,13 +36,13 @@
         </div>
 
         <div class="hidden lg:flex items-center space-x-2">
-            <a href="{% url 'login' %}">
+            <a href="/login">
                 <button id="add-transaction-btn"
                     class="flex items-center space-x-2 bg-white/10 hover:bg-white/20 px-3 lg:px-4 py-2 rounded-full transition-all duration-200 group">
                     <span class="text-sm hidden md:inline-block">Login</span>
                 </button>
             </a>
-            <a href="{% url 'register' %}">
+            <a href="/register">
                 <button id="add-transaction-btn"
                     class="flex items-center space-x-2 bg-white/10 hover:bg-white/20 px-3 lg:px-4 py-2 rounded-full transition-all duration-200 group">
                     <span class="text-sm hidden md:inline-block">Sign Up</span>
@@ -68,27 +68,27 @@
         class="lg:hidden fixed top-0 right-0 h-full w-72 bg-white shadow-lg transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col">
         <div class="flex-grow flex flex-col justify-center">
             <ul class="space-y-6 p-4 px-6 text-gray-700">
-                <a href="{% url 'dashboard' %}"
+                <a href="/dashboard"
                     class="block px-4 py-2 rounded-lg {% if current_path == '/dashboard/' %}bg-indigo-50 text-indigo-600 font-medium{% else %}hover:bg-gray-50 text-gray-700{% endif %}">
                     <i class="fa-solid fa-home mr-2"></i> Home
                 </a>
-                <a href="{% url 'settings' %}"
+                <a href="/settings"
                     class="block px-4 py-2 rounded-lg {% if current_path == '/settings/' %}bg-indigo-50 text-indigo-600 font-medium{% else %}hover:bg-gray-50 text-gray-700{% endif %}">
                     <i class="fa-solid fa-user mr-2"></i> Profile
                 </a>
-                <a href=""
+                <a href="/notifications"
                     class="block px-4 py-2 rounded-lg {% if current_path == '/notifications/' %}bg-indigo-50 text-indigo-600 font-medium{% else %}hover:bg-gray-50 text-gray-700{% endif %}">
                     <i class="fa-solid fa-bell mr-2"></i> Notifications
                 </a>
-                <a href="{% url 'create_category' %}"
+                <a href="/create/category"
                     class="block px-4 py-2 rounded-lg {% if current_path == '/create/category/' %}bg-indigo-50 text-indigo-600 font-medium{% else %}hover:bg-gray-50 text-gray-700{% endif %}">
                     <i class="fa-solid fa-plus mr-2"></i> Create Category
                 </a>
-                <a href="{% url 'create_transaction' %}"
+                <a href="/create/"
                     class="block px-4 py-2 rounded-lg {% if current_path == '/create/' %}bg-indigo-50 text-indigo-600 font-medium{% else %}hover:bg-gray-50 text-gray-700{% endif %}">
                     <i class="fa-solid fa-money-bill-wave mr-2"></i> Create Transaction
                 </a>
-                <a href="{% url 'logout' %}" class="block px-4 py-2 rounded-lg bg-red-100 text-red-700">
+                <a href="/logout/" class="block px-4 py-2 rounded-lg bg-red-100 text-red-700">
                     <i class="fa-solid fa-right-from-bracket mr-2"></i> Logout
                 </a>
             </ul>
@@ -97,20 +97,62 @@
 
     <section class="section">
         <h1 class="code">Budget with a why</h1>
-        <p class="spend">Spend, save, and give toward what's important in life</p>
+        <p class="spender">Spend, save, and give toward what's important in life</p>
         <button class="menu">Manage my expenses</button>
     </section>
     <section class="spend">
-        <div class="wise">
-            <h2 class="bold">Why SPENDWISE Works</h2>
-        <h3>92% of SPENDWISEers fool less money stress starting. You're next.</h3>
-        </div>
-        <div>
-            <img src="{% static 'lappy.jpeg' %}" alt="">
-            <h4>Learn our secret sauce</h4>
-            <P>Our method has only one ingrediant</P>
-        </div>
+            <div>
+                <div class="wise">
+                    <h2 class="bold">Why SPENDWISE Works</h2>
+                    <h3>92% of SPENDWISEers fool less money stress starting. You're next.</h3>
+                </div>
+                <div class="city">
+                    <img src="{% static "lappy.jpeg" %}" alt="">
+                    <div class="go">
+                        <h4 class="section_head">Learn our secret sauce</h4>
+                        <p>Our method has only one ingredient. Give every dollar a job. We'll teach you</p>
+                    </div>
+                </div>
+                <div class="city">
+                    <img src="{% static "map.jpg" %}" alt="">
+                    <div class="go">
+                        <h4 class="section_head">Fund your wildest dreams...and your water bill</h4>
+                        <p>Use the app to define priorities and guide spending decisians towward the life you wwant</p>
+                    </div>
+                </div>
+                <div class="city">
+                    <img src="{% static "kite.svg" %}" alt="">
+                    <div class="go">
+                        <h4 class="section_head">Live spendfully</h4>
+                        <p>Improve relationships, sleep better at night, and achieve your goals through intentional spending</p>
+                    </div>
+                </div>
+                <button class="menu">Start Your Free 30 Day Trial</button>
+            </div>
+            <div class="picture">
+                <img src="{% static "picture.jpg" %}" alt="">
+            </div>
     </section>
+    <div class="testimony">
+        <h1 class="heading">We don't like to brag...so we let others do it for us.</h1>
+        <p class="text">From social media mentions to coverage on major outlets, we get a lot of (good) attention. And we love that for us.</p>
+        <div class="hidden lg:flex space-x-4 logo lg:mx-4 mt-8 justify-center">
+            <h1 class="text-sm tracking-tight five">
+                <span class="text-white">FORBES</span>
+            </h1>
+            <h1 class="text-sm tracking-tight five">
+                <span class="text-white">The NEW YORK TIMES</span>
+            </h1>                           
+            <h1 class="text-sm tracking-tight five">
+                <span class="text-white">WSJ</span>
+            </h1>
+            <h1 class="text-sm tracking-tight five">
+                <span class="text-white">WIRED</span>
+            </h1>
+            <h1 class="text-sm tracking-tight five">
+                <span class="text-white">REAL SIMPLE</span>
+            </h1>
+        </div>
+    </div>
 </body>
-
 </html>
