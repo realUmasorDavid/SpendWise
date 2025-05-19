@@ -83,3 +83,21 @@ img {
     font-size: 28px;
     font-weight: 500;
 }
+
+@media all and (max-width: 750px)  {
+    .spend{
+        flex-direction: column;
+    }
+    .picture{
+        margin-top: 1rem;
+    }
+    .testimony{
+        border: solid 3px blue;
+        padding: 60px 10px;
+        background-color: blue;
+        border-radius: 8px;
+        margin: 0 2rem;
+        color: white;
+        text-align: center
+    }
+}
