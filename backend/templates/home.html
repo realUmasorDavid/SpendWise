@@ -98,7 +98,7 @@
     <section class="section">
         <h1 class="code">Budget with a why</h1>
         <p class="spender">Spend, save, and give toward what's important in life</p>
-        <button class="menu">Manage my expenses</button>
+        <a href="{% url 'dashboard' %}" class=" cursor-pointer"><button class="menu">Manage my expenses</button></a>
     </section>
     <section class="spend">
             <div>
@@ -127,7 +127,7 @@
                         <p>Improve relationships, sleep better at night, and achieve your goals through intentional spending</p>
                     </div>
                 </div>
-                <button class="menu">Start Your Free 30 Day Trial</button>
+                <a href="{% url 'dashboard' %}" class=" cursor-pointer"><button class="menu">Manage your expenses now</button></a>
             </div>
             <div class="picture">
                 <img src="{% static "picture.jpg" %}" alt="">
@@ -154,5 +154,23 @@
             </h1>
         </div>
     </div>
+    <script>
+        document.getElementById('hamburger').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            const hamburgerIcon = document.getElementById('hamburger-icon');
+            const closeIcon = document.getElementById('close-icon');
+            
+            mobileMenu.classList.toggle('translate-x-full');
+            mobileMenu.classList.toggle('translate-x-0');
+            document.body.classList.toggle('overflow-hidden');
+            
+            hamburgerIcon.classList.toggle('hidden');
+            closeIcon.classList.toggle('hidden');
+        });
+
+        if (window.history.replaceState) {
+            window.history.replaceState(null, null, window.location.href);
+        }
+    </script>
 </body>
 </html>
