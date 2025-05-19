@@ -427,6 +427,9 @@
   .min-h-screen {
     min-height: 100vh;
   }
+  .w-2 {
+    width: calc(var(--spacing) * 2);
+  }
   .w-2\/3 {
     width: calc(2/3 * 100%);
   }
@@ -471,6 +474,9 @@
   }
   .flex-grow {
     flex-grow: 1;
+  }
+  .border-collapse {
+    border-collapse: collapse;
   }
   .origin-top-right {
     transform-origin: top right;
@@ -700,6 +706,9 @@
   .bg-blue-50 {
     background-color: var(--color-blue-50);
   }
+  .bg-emerald-500 {
+    background-color: var(--color-emerald-500);
+  }
   .bg-emerald-500\/30 {
     background-color: color-mix(in srgb, oklch(69.6% 0.17 162.48) 30%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
@@ -724,6 +733,9 @@
   .bg-indigo-50 {
     background-color: var(--color-indigo-50);
   }
+  .bg-indigo-500 {
+    background-color: var(--color-indigo-500);
+  }
   .bg-indigo-500\/30 {
     background-color: color-mix(in srgb, oklch(58.5% 0.233 277.117) 30%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
@@ -747,6 +759,9 @@
   }
   .bg-red-600 {
     background-color: var(--color-red-600);
+  }
+  .bg-rose-500 {
+    background-color: var(--color-rose-500);
   }
   .bg-rose-500\/30 {
     background-color: color-mix(in srgb, oklch(64.5% 0.246 16.439) 30%, transparent);
@@ -850,6 +865,9 @@
   }
   .px-8 {
     padding-inline: calc(var(--spacing) * 8);
+  }
+  .py-0 {
+    padding-block: calc(var(--spacing) * 0);
   }
   .py-0\.5 {
     padding-block: calc(var(--spacing) * 0.5);
@@ -1022,6 +1040,9 @@
   .uppercase {
     text-transform: uppercase;
   }
+  .underline {
+    text-decoration-line: underline;
+  }
   .placeholder-gray-500 {
     &::placeholder {
       color: var(--color-gray-500);
@@ -1048,6 +1069,10 @@
   .shadow-sm {
     --tw-shadow: 0 1px 3px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 1px 2px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
     box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+  }
+  .outline {
+    outline-style: var(--tw-outline-style);
+    outline-width: 1px;
   }
   .blur {
     --tw-blur: blur(8px);
@@ -1393,12 +1418,30 @@
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
+  .lg\:space-y-0 {
+    @media (width >= 64rem) {
+      :where(& > :not(:last-child)) {
+        --tw-space-y-reverse: 0;
+        margin-block-start: calc(calc(var(--spacing) * 0) * var(--tw-space-y-reverse));
+        margin-block-end: calc(calc(var(--spacing) * 0) * calc(1 - var(--tw-space-y-reverse)));
+      }
+    }
+  }
   .lg\:space-x-2 {
     @media (width >= 64rem) {
       :where(& > :not(:last-child)) {
         --tw-space-x-reverse: 0;
         margin-inline-start: calc(calc(var(--spacing) * 2) * var(--tw-space-x-reverse));
         margin-inline-end: calc(calc(var(--spacing) * 2) * calc(1 - var(--tw-space-x-reverse)));
+      }
+    }
+  }
+  .lg\:space-x-4 {
+    @media (width >= 64rem) {
+      :where(& > :not(:last-child)) {
+        --tw-space-x-reverse: 0;
+        margin-inline-start: calc(calc(var(--spacing) * 4) * var(--tw-space-x-reverse));
+        margin-inline-end: calc(calc(var(--spacing) * 4) * calc(1 - var(--tw-space-x-reverse)));
       }
     }
   }
@@ -1688,6 +1731,11 @@
   inherits: false;
   initial-value: 0 0 #0000;
 }
+@property --tw-outline-style {
+  syntax: "*";
+  inherits: false;
+  initial-value: solid;
+}
 @property --tw-blur {
   syntax: "*";
   inherits: false;
@@ -1792,6 +1840,7 @@
       --tw-ring-offset-width: 0px;
       --tw-ring-offset-color: #fff;
       --tw-ring-offset-shadow: 0 0 #0000;
+      --tw-outline-style: solid;
       --tw-blur: initial;
       --tw-brightness: initial;
       --tw-contrast: initial;

@@ -1,10 +1,11 @@
-.code{
+.code {
     font-size: xx-large;
     font-weight: 900;
     color: blue;
-    
+
 }
-.section{
+
+.section {
     min-height: 15vh;
     align-items: center;
     display: flex;
@@ -12,29 +13,33 @@
     justify-content: center;
     margin-top: 35px;
 }
-.spender{
+
+.spender {
     margin: 1rem 0;
 }
-.menu{
-    border:  solid 1px blue;
+
+.menu {
+    border: solid 1px blue;
     border-radius: 8px;
     padding: 16px 16px;
     background-color: blue;
     color: white;
 }
 
-.bold{
+.bold {
     font-size: 40px;
     font-weight: 600;
     color: blue;
 }
-.spend{
+
+.spend {
     padding: 0 3rem;
     display: flex;
     flex-direction: row;
     margin: 4rem 4rem;
 }
-.wise{
+
+.wise {
     margin-bottom: 16px;
 }
 
@@ -42,19 +47,22 @@ img {
     height: 40px;
     width: 40px;
 }
-.city{
+
+.city {
     display: flex;
     margin: 2rem 0;
 }
 
-.section_head{
+.section_head {
     font-size: 20px;
     font-weight: 900;
 }
-.go{
+
+.go {
     margin: 0 2rem;
 }
-.testimony{
+
+.testimony {
     border: solid 3px blue;
     padding: 60px 10px;
     background-color: blue;
@@ -63,41 +71,64 @@ img {
     color: white;
     text-align: center;
 }
-.heading{
+
+.heading {
     font-size: 30px;
     font-weight: 400;
     color: white;
 }
-.text{
+
+.text {
     margin: 0 4rem;
 }
-.free{
+
+.free {
     display: flex;
     flex-direction: column;
 }
-.picture img{
+
+.picture img {
     height: 500px;
     width: 1200px;
 }
-.five{
+
+.five {
     font-size: 28px;
     font-weight: 500;
 }
 
-@media all and (max-width: 750px)  {
-    .spend{
+@media all and (max-width: 750px) {
+    .spend {
+        padding: 0 0rem;
         flex-direction: column;
+        margin: 4rem 2rem;
     }
-    .picture{
+
+    .picture {
         margin-top: 1rem;
     }
-    .testimony{
+
+    .bold {
+        font-size: 24px;
+    }
+
+    .testimony {
         border: solid 3px blue;
-        padding: 60px 10px;
+        padding: 40px 16px;
         background-color: blue;
         border-radius: 8px;
-        margin: 0 2rem;
+        margin: 0 1rem;
         color: white;
         text-align: center
+    }
+
+    .testimony h1 {
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 8px;
+    }
+
+    .testimony p {
+        margin: 0 1rem;
     }
 }
