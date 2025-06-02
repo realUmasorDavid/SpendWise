@@ -62,7 +62,9 @@ def settings(request):
         user.last_name = request.POST['last_name']
         user_profile.phone = request.POST['phone_number']
         user_profile.avatar = request.FILES.get('avatar')
-        user_profile.starting_balance = request.POST['starting_balance']
+        
+        if user_profile.starting_balance is None or user_profile.starting_balance == 0:
+            user_profile.starting_balance = request.POST['starting_balance']
         
         user.save()
         user_profile.save()

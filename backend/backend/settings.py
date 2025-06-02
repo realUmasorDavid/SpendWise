@@ -94,11 +94,11 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # PORT = os.getenv("port")
 # DBNAME = os.getenv("dbname")
 
-USER = config("user")
-PASSWORD = config("password")
-HOST = config("host")
-PORT = config("port")
-DBNAME = config("dbname")
+# USER = config("user")
+# PASSWORD = config("password")
+# HOST = config("host")
+# PORT = config("port")
+# DBNAME = config("dbname")
 
 # USER = 'postgres.mefvwqxphfuholcaiaxx'
 # PASSWORD = 'z+X?,kSy6dQ-G)4'
@@ -108,19 +108,19 @@ DBNAME = config("dbname")
 
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': DBNAME,
-        'USER': USER,
-        'PASSWORD': PASSWORD,
-        'HOST': HOST,
-        'PORT': PORT,
-        # 'OPTIONS': {'sslmode': 'require'},
-    },
     # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': BASE_DIR / 'db.sqlite3',
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     'NAME': DBNAME,
+    #     'USER': USER,
+    #     'PASSWORD': PASSWORD,
+    #     'HOST': HOST,
+    #     'PORT': PORT,
+    #     # 'OPTIONS': {'sslmode': 'require'},
     # },
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    },
 }
 
 
@@ -157,27 +157,27 @@ USE_I18N = True
 USE_TZ = True
 
 # SUPABASE S3 settings
-SUPABASE_ACCESS_KEY_ID = config('SUPABASE_ACCESS_KEY_ID')
-SUPABASE_SECRET_ACCESS_KEY = config('SUPABASE_SECRET_ACCESS_KEY')
-SUPABASE_STORAGE_BUCKET_NAME = config('SUPABASE_STORAGE_BUCKET_NAME')
-SUPABASE_S3_ENDPOINT_URL = config('SUPABASE_S3_ENDPOINT_URL')
-SUPABASE_S3_REGION_NAME = config('SUPABASE_S3_REGION_NAME')
+# SUPABASE_ACCESS_KEY_ID = config('SUPABASE_ACCESS_KEY_ID')
+# SUPABASE_SECRET_ACCESS_KEY = config('SUPABASE_SECRET_ACCESS_KEY')
+# SUPABASE_STORAGE_BUCKET_NAME = config('SUPABASE_STORAGE_BUCKET_NAME')
+# SUPABASE_S3_ENDPOINT_URL = config('SUPABASE_S3_ENDPOINT_URL')
+# SUPABASE_S3_REGION_NAME = config('SUPABASE_S3_REGION_NAME')
 
 # Media files (user-uploaded content)
 STORAGES = {
-    "default": {
-        "BACKEND": "storages.backends.s3.S3Storage",
-        "OPTIONS": {
-            "access_key": SUPABASE_ACCESS_KEY_ID,
-            "secret_key": SUPABASE_SECRET_ACCESS_KEY,
-            "bucket_name": SUPABASE_STORAGE_BUCKET_NAME,
-            "region_name": SUPABASE_S3_REGION_NAME,
-            "endpoint_url": SUPABASE_S3_ENDPOINT_URL,
-        },
-    },
-    # 'default': {
-    #     'BACKEND': 'django.core.files.storage.FileSystemStorage'
+    # "default": {
+    #     "BACKEND": "storages.backends.s3.S3Storage",
+    #     "OPTIONS": {
+    #         "access_key": SUPABASE_ACCESS_KEY_ID,
+    #         "secret_key": SUPABASE_SECRET_ACCESS_KEY,
+    #         "bucket_name": SUPABASE_STORAGE_BUCKET_NAME,
+    #         "region_name": SUPABASE_S3_REGION_NAME,
+    #         "endpoint_url": SUPABASE_S3_ENDPOINT_URL,
+    #     },
     # },
+    'default': {
+        'BACKEND': 'django.core.files.storage.FileSystemStorage'
+    },
     "staticfiles": {
         "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
     },
